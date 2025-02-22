@@ -19,7 +19,7 @@ on:
           # - TestPyPI
 
 env:
-  PYPI_PACKAGE: hexdoc-hexmapping
+  PYPI_PACKAGE: hexdoc-hexweb
 
 permissions:
   contents: read
