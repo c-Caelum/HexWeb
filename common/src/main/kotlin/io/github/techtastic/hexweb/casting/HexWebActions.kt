@@ -33,7 +33,7 @@ object HexWebActions {
     )}
     val HAS_ELEMENT = ACTIONS.register("has_element") { ActionRegistryEntry(
         HexPattern.fromAngles("edadee", HexDir.NORTH_WEST),
-        OpGetElement
+        OpHasElement
     )}
 
 
