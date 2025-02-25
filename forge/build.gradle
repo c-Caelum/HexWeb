@@ -93,7 +93,7 @@ publishMods {
     modLoaders.add("forge")
 
     version = project.version + "-forge"
-    displayName = "HexWeb $project.version [Forge]"
+    displayName = "HexWeb $project.version [Forge] - Fixed"
 
     curseforge {
         accessToken = project.curseforge_api_token
