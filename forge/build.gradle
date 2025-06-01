@@ -63,10 +63,6 @@ dependencies {
     modRuntimeOnly ("top.theillusivec4.caelus:caelus-forge:${caelus_version}+1.20.1") { transitive = false }
 
     modImplementation files("${rootProject.rootDir}/libs/moreiotas-forge-1.20.1-0.1.0-3.jar")
-
-    include(implementation "com.squareup.okhttp3:okhttp:${okhttp_version}")
-    include(implementation "com.squareup.okio:okio:${okio_version}")
-    include(implementation "com.squareup.okio:okio-jvm:${okio_version}")
 }
 
 processResources {

@@ -12,7 +12,7 @@ import io.github.techtastic.hexweb.casting.iota.JsonIota
 import io.github.techtastic.hexweb.casting.iota.ResponseIota
 import io.github.techtastic.hexweb.casting.mishap.MishapBlacklistUrl
 import io.github.techtastic.hexweb.casting.mishap.MishapCannotJson
-import io.github.techtastic.hexweb.casting.mishap.MishapIOException
+import io.github.techtastic.hexweb.casting.mishap.MishapResponseError
 import io.github.techtastic.hexweb.casting.mishap.MishapTooEarly
 import io.github.techtastic.hexweb.config.HexWebConfig
 import io.github.techtastic.hexweb.interop.HexicalInterop.toHexicalIota
@@ -20,10 +20,10 @@ import io.github.techtastic.hexweb.interop.HexicalInterop.toHexicalJson
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.phys.Vec3
-import okhttp3.Response
 import ram.talia.moreiotas.api.casting.iota.EntityTypeIota
 import ram.talia.moreiotas.api.casting.iota.ItemTypeIota
 import ram.talia.moreiotas.api.casting.iota.StringIota
+import java.net.http.HttpResponse
 
 object HexWebOperatorUtils {
     fun List<Iota>.getJsonObject(idx: Int, argc: Int): JsonObject {
@@ -36,14 +36,14 @@ object HexWebOperatorUtils {
         throw MishapNotEnoughArgs(idx + 1, this.size)
     }
 
-    fun List<Iota>.getResponse(idx: Int, argc: Int): Response {
+    fun List<Iota>.getResponse(idx: Int, argc: Int): HttpResponse<String> {
         if (idx >= 0 && idx <= this.lastIndex) {
             val iota = this.get(idx)
             if (iota is ResponseIota) {
                 val either = HTTPRequestsHandler.getResponse(iota.getPayload()) ?: throw MishapTooEarly()
                 if (either.right().isPresent) {
                     HTTPRequestsHandler.clearResponse(iota.getPayload())
-                    throw MishapIOException(either.right().get())
+                    throw MishapResponseError(either.right().get())
                 }
                 return try {
                     val response = either.left().orElseThrow()

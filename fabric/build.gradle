@@ -74,10 +74,6 @@ dependencies {
     modImplementation files("${rootProject.rootDir}/libs/hexical-1.5.0.jar")
     modRuntimeOnly("dev.kosmx.player-anim:player-animation-lib-fabric:1.0.2-rc1+1.20")
 
-    include(implementation "com.squareup.okhttp3:okhttp:${okhttp_version}")
-    include(implementation "com.squareup.okio:okio:${okio_version}")
-    include(implementation "com.squareup.okio:okio-jvm:${okio_version}")
-
     modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:8.0.0"
 }
 
