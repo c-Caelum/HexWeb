@@ -3,7 +3,13 @@
   "values": [
     "hexcasting:entity",
     "hexweb:response",
-    "hexical:pigment",
-    "#hexal:illegal_interworld"
+    {
+      "id": "hexical:pigment",
+      "required": false
+    },
+    {
+      "id": "#hexal:illegal_interworld",
+      "required": false
+    }
   ]
 }
