@@ -37,7 +37,7 @@ object OpSendSocket: SpellAction {
 
         return SpellAction.Result(
             Spell(socket, data),
-            MediaConstants.SHARD_UNIT,
+            MediaConstants.SHARD_UNIT * 10,
             listOf(ParticleSpray(imp.blockPos.center, Vec3(0.0, 10.0, 0.0), 0.0, 0.1))
         )
     }
