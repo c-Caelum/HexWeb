@@ -30,7 +30,7 @@ class JsonIota(val json: JsonObject): Iota(HexWebIotaTypes.JSON.get(), json) {
         val sub = mutableListOf<Iota>()
         this.json.asMap().forEach { (key, value) ->
             sub.add(StringIota.make(key))
-            sub.add(value.toIota())
+            sub.add(value.toIota(null))
         }
         return sub
     }
@@ -44,7 +44,7 @@ class JsonIota(val json: JsonObject): Iota(HexWebIotaTypes.JSON.get(), json) {
                 var comp = Component.literal("{")
 
                 json.asMap().forEach { key, element ->
-                    comp = comp.append("§d\"$key\"§f:").append(element.toIota().display())
+                    comp = comp.append("§d\"$key\"§f:").append(element.toIota(null).display())
                     if (json.asMap().keys.last() != key)
                         comp = comp.append(", ")
                 }

@@ -16,7 +16,7 @@ object OpGetElement: ConstMediaAction {
         val json = args.getJsonObject(0, argc)
         val key = args.getString(1, argc)
         if (json.has(key))
-            return listOf(json.get(key).toIota())
+            return listOf(json.get(key).toIota(env.world))
         throw MishapInvalidJsonKey(key)
     }
 }
