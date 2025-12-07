@@ -3,6 +3,8 @@ package io.github.techtastic.hexweb.utils
 import at.petrak.hexcasting.api.casting.iota.*
 import at.petrak.hexcasting.api.casting.mishaps.MishapInvalidIota
 import at.petrak.hexcasting.api.casting.mishaps.MishapNotEnoughArgs
+import at.petrak.hexcasting.api.utils.getString
+import at.petrak.hexcasting.common.lib.hex.HexIotaTypes
 import com.google.gson.*
 import com.mojang.serialization.JsonOps
 import io.github.techtastic.hexweb.HTTPRequestsHandler
@@ -15,6 +17,7 @@ import io.github.techtastic.hexweb.config.HexWebConfig
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtOps
 import net.minecraft.server.level.ServerLevel
+import org.apache.commons.codec.binary.Hex
 import ram.talia.moreiotas.api.casting.iota.StringIota
 import java.net.http.HttpResponse
 
@@ -64,7 +67,10 @@ object HexWebOperatorUtils {
 
         val json = this.asJsonObject
         val nbt = JsonOps.INSTANCE.convertTo(NbtOps.INSTANCE, json) as? CompoundTag
-        IotaType.getTypeFromTag(nbt)?.let { type -> return type.deserialize(nbt, level) ?: NullIota() }
+        IotaType.getTypeFromTag(nbt)?.let { type ->
+            if (HexWebConfig.IOTA_TYPE_BLACKLIST.get().contains(nbt.getString(HexIotaTypes.KEY_TYPE)!!)) return GarbageIota()
+            return type.deserialize(nbt, level) ?: GarbageIota()
+        }
 
         return JsonIota(json)
     }
