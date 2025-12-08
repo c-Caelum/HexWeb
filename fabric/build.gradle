@@ -64,15 +64,17 @@ dependencies {
     modRuntimeOnly "at.petra-k.paucal:paucal-fabric-${minecraft_version}:${paucal_version}"
     modRuntimeOnly "com.samsthenerd.inline:inline-fabric:$minecraft_version-$inline_version"
     modRuntimeOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-api:${cca_version}"
-    modRuntimeOnly files("${rootProject.rootDir}/libs/serialization-hooks-0.4.99999.jar")
+    modRuntimeOnly "io.github.tropheusj:serialization-hooks:0.4.99999"
     modImplementation("software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_version}")
     modImplementation("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
-    modImplementation files("${rootProject.rootDir}/libs/moreiotas-fabric-1.20.1-0.1.0-3.jar")
-    modImplementation files("${rootProject.rootDir}/libs/hexical-1.5.0.jar")
-    modRuntimeOnly("dev.kosmx.player-anim:player-animation-lib-fabric:1.0.2-rc1+1.20")
+    modImplementation ("ram.talia.moreiotas:moreiotas-fabric-$minecraft_version:$more_iotas_version") { transitive = false }
+    modImplementation ("ram.talia.hexal:hexal-fabric-$minecraft_version:$hexal_version") { transitive = false }
+    modImplementation "maven.modrinth:hexical:$hexical_version"
+    modCompileOnly "penguinencounter.mediatransport:mediatransport-fabric:$mediatransport_version+$minecraft_version"
+    modRuntimeOnly "dev.kosmx.player-anim:player-animation-lib-fabric:1.0.2-rc1+1.20"
 
     modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:8.0.0"
 }

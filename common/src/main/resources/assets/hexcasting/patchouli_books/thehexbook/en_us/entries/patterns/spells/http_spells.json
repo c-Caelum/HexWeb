@@ -4,7 +4,6 @@
   "icon": "minecraft:sculk_shrieker",
   "sortnum": 27,
   "advancement": "hexcasting:root",
-  "read_by_default": true,
   "pages": [
     {
       "type": "patchouli:text",

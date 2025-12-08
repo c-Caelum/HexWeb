@@ -1,0 +1,50 @@
+{
+  "variants": {
+    "energized=false,facing=down": {
+      "model": "hexweb:block/circle/impetus/socket/dim",
+      "x": 90
+    },
+    "energized=false,facing=east": {
+      "model": "hexweb:block/circle/impetus/socket/dim",
+      "y": 90
+    },
+    "energized=false,facing=north": {
+      "model": "hexweb:block/circle/impetus/socket/dim"
+    },
+    "energized=false,facing=south": {
+      "model": "hexweb:block/circle/impetus/socket/dim",
+      "y": 180
+    },
+    "energized=false,facing=up": {
+      "model": "hexweb:block/circle/impetus/socket/dim",
+      "x": -90
+    },
+    "energized=false,facing=west": {
+      "model": "hexweb:block/circle/impetus/socket/dim",
+      "y": 270
+    },
+    "energized=true,facing=down": {
+      "model": "hexweb:block/circle/impetus/socket/lit",
+      "x": 90
+    },
+    "energized=true,facing=east": {
+      "model": "hexweb:block/circle/impetus/socket/lit",
+      "y": 90
+    },
+    "energized=true,facing=north": {
+      "model": "hexweb:block/circle/impetus/socket/lit"
+    },
+    "energized=true,facing=south": {
+      "model": "hexweb:block/circle/impetus/socket/lit",
+      "y": 180
+    },
+    "energized=true,facing=up": {
+      "model": "hexweb:block/circle/impetus/socket/lit",
+      "x": -90
+    },
+    "energized=true,facing=west": {
+      "model": "hexweb:block/circle/impetus/socket/lit",
+      "y": 270
+    }
+  }
+}

@@ -4,7 +4,6 @@ import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.mishaps.Mishap
 import net.minecraft.network.chat.Component
-import okio.IOException
 
 class MishapTooEarly: Mishap() {
     override fun accentColor(ctx: CastingEnvironment, errorCtx: Context) = ctx.pigment

@@ -4,7 +4,6 @@
   "icon": "minecraft:sculk_sensor",
   "sortnum": 25,
   "advancement": "hexcasting:root",
-  "read_by_default": true,
   "pages": [
     {
       "type": "patchouli:text",

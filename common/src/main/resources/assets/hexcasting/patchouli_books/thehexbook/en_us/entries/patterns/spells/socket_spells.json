@@ -1,0 +1,30 @@
+{
+  "name": "hexweb.entry.socket_spells",
+  "category": "hexcasting:patterns/spells",
+  "icon": "hexweb:impetus/socket",
+  "sortnum": 27,
+  "advancement": "hexcasting:enlightenment",
+  "entry_color": "54398a",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "hexweb.page.socket_spells.entry"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexweb:send",
+      "anchor": "hexweb:send",
+      "input": "str | json",
+      "output": "",
+      "text": "hexweb.page.socket_spells.send"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexweb:set",
+      "anchor": "hexweb:set",
+      "input": "vec, str | null, int",
+      "output": "",
+      "text": "hexweb.page.socket_spells.set"
+    }
+  ]
+}

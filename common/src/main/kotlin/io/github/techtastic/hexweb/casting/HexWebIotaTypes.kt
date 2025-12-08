@@ -5,14 +5,12 @@ import dev.architectury.registry.registries.DeferredRegister
 import io.github.techtastic.hexweb.HexWeb.MOD_ID
 import io.github.techtastic.hexweb.casting.iota.JsonIota
 import io.github.techtastic.hexweb.casting.iota.ResponseIota
-import io.github.techtastic.hexweb.casting.iota.SocketIota
 
 object HexWebIotaTypes {
     private val IOTAS = DeferredRegister.create(MOD_ID, HexRegistries.IOTA_TYPE)
 
     val JSON = IOTAS.register("json", JsonIota::TYPE)
     val RESPONSE = IOTAS.register("response", ResponseIota::TYPE)
-    val SOCKET = IOTAS.register("socket", SocketIota::TYPE)
 
     fun register() {
         IOTAS.register()

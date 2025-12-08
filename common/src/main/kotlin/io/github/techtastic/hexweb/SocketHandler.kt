@@ -1,38 +1,128 @@
 package io.github.techtastic.hexweb
 
+import io.github.techtastic.hexweb.casting.mishap.MishapPacketTooBig
+import io.github.techtastic.hexweb.casting.mishap.MishapSocketConnectionError
 import io.github.techtastic.hexweb.utils.HexWebOperatorUtils
-import java.net.ServerSocket
+import ram.talia.moreiotas.api.casting.iota.StringIota
+import java.io.IOException
+import java.net.InetSocketAddress
 import java.net.Socket
+import java.net.SocketTimeoutException
+import java.nio.charset.StandardCharsets
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.Executors
+import kotlin.concurrent.Volatile
 
 object SocketHandler {
-    val clientSockets = mutableMapOf<UUID, Socket>()
-    val serverSockets = mutableMapOf<UUID, ServerSocket>()
+    private val EXECUTOR = Executors.newSingleThreadExecutor()
+    private val SOCKETS = ConcurrentHashMap<UUID, ManagedSocket>()
 
-    fun getOrMakeClientSocket(uuid: UUID, url: String, port: Int): Socket {
-        clientSockets[uuid]?.let { s ->
-            HexWebOperatorUtils.checkBlacklist(s.remoteSocketAddress.toString())
-            return s
-        }
+    fun getSocket(id: UUID) = SOCKETS[id]
 
-        HexWebOperatorUtils.checkBlacklist("$url:$port")
+    fun createSocket(host: String?, port: Int): UUID {
+        host?.let { host -> HexWebOperatorUtils.checkBlacklist("$host:$port") }
+            ?: HexWebOperatorUtils.checkBlacklist(":$port")
 
-        val s = Socket(url, port)
-        clientSockets[uuid] = s
-        return s
+        val id = UUID.randomUUID()
+        SOCKETS[id] = ManagedSocket(id, host, port)
+        return id
     }
 
-    fun getOrMakeServerSocket(uuid: UUID, port: Int): ServerSocket {
-        serverSockets[uuid]?.let { s ->
-            // TODO: Check Port Blacklist
+    class ManagedSocket(val id: UUID, val host: String?, val port: Int) {
+        private val socket = Socket()
+        private val received = ConcurrentLinkedQueue<ByteArray>()
 
-            return s
+        @Volatile
+        private var closed = false
+
+        init {
+            EXECUTOR.submit {
+                try {
+                    val address = host?.let { host -> InetSocketAddress(host, port) } ?: InetSocketAddress(port)
+                    socket.connect(address, 10000)
+                    socket.soTimeout = 100
+                    receiving()
+                } catch (e: IOException) {
+                    close()
+                }
+            }
         }
 
-        // TODO: Check Port Blacklist
+        private fun receiving() {
+            EXECUTOR.submit {
+                while (!closed && !socket.isClosed) {
+                    try {
+                        val input = socket.getInputStream()
+                        if (input.available() > 0) {
+                            val bytes = ByteArray(8192)
+                            val read = input.read(bytes)
+                            if (read > 0)
+                                received.add(bytes.copyOf(read))
 
-        val s = ServerSocket(port)
-        serverSockets[uuid] = s
-        return s
+                            if (read == -1) {
+                                close()
+                                break
+                            }
+                        }
+                    } catch (e: Exception) {
+                        when (e) {
+                            is SocketTimeoutException -> {}
+                            else -> {
+                                close()
+                                break
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        fun sendData(data: ByteArray) {
+            if (closed || socket.isClosed)
+                throw MishapSocketConnectionError(IOException("Socket it closed"))
+
+            if (data.size > 65536)
+                throw MishapPacketTooBig(data.size)
+
+           EXECUTOR.submit {
+               try {
+                   socket.getOutputStream().write(data)
+                   socket.getOutputStream().flush()
+               } catch (e: IOException) {
+                   close()
+                   throw MishapSocketConnectionError(e)
+               }
+           }
+        }
+
+        fun hasData() = received.isNotEmpty()
+
+        fun receiveData(): ByteArray? = received.poll()
+
+        fun getAllReceived(): List<String>? {
+            if (received.isEmpty()) return null
+            val list = mutableListOf<String>()
+            var data = receiveData()
+            while (data != null && list.size < 1023) {
+                list.add(data.toString(StandardCharsets.UTF_8))
+                data = receiveData()
+            }
+            return list
+        }
+
+        fun isOpen() = !closed && socket.isConnected && !socket.isClosed
+
+        fun close() {
+            if (closed) return
+            closed = true
+
+            try {
+                socket.close()
+            } catch (ignored: IOException) {}
+
+            SOCKETS.remove(id)
+        }
     }
 }

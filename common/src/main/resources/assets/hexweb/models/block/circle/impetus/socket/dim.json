@@ -1,0 +1,44 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "bottom": "hexcasting:block/circle/bottom",
+    "top": "hexweb:block/circle/impetus/socket/top_dim",
+    "front": "hexweb:block/circle/impetus/socket/front_dim",
+    "back": "hexcasting:block/circle/impetus/back_dim",
+    "side": "hexweb:block/circle/impetus/socket/side_dim",
+    "particle": "hexcasting:block/slate"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "north": {
+          "texture": "#front",
+          "cullface": "north"
+        },
+        "south": {
+          "texture": "#back",
+          "cullface": "south"
+        },
+        "east": {
+          "texture": "#side",
+          "cullface": "east"
+        },
+        "west": {
+          "texture": "#side",
+          "uv": [16, 0, 0, 16],
+          "cullface": "west"
+        },
+        "up": {
+          "texture": "#top",
+          "cullface": "up"
+        },
+        "down": {
+          "texture": "#bottom",
+          "cullface": "down"
+        }
+      }
+    }
+  ]
+}

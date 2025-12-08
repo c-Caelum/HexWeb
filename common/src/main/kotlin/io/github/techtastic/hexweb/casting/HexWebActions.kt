@@ -8,6 +8,8 @@ import dev.architectury.registry.registries.DeferredRegister
 import io.github.techtastic.hexweb.HexWeb.MOD_ID
 import io.github.techtastic.hexweb.casting.actions.*
 import io.github.techtastic.hexweb.casting.actions.spells.OpRequest
+import io.github.techtastic.hexweb.casting.actions.spells.OpSendSocket
+import io.github.techtastic.hexweb.casting.actions.spells.OpSetSocket
 
 object HexWebActions {
     private val ACTIONS = DeferredRegister.create(MOD_ID, HexRegistries.ACTION)
@@ -48,6 +50,33 @@ object HexWebActions {
         OpGetResponse
     )}
 
+
+    // SOCKETS
+
+    val READ = ACTIONS.register("read") { ActionRegistryEntry(
+        HexPattern.fromAngles("eqewdewqe", HexDir.NORTH_WEST),
+        OpReadSocket
+    ) }
+
+    val SEND = ACTIONS.register("send") { ActionRegistryEntry(
+        HexPattern.fromAngles("qewqawqeq", HexDir.NORTH_EAST),
+        OpSendSocket
+    ) }
+
+    val GET_HOST = ACTIONS.register("get_host") { ActionRegistryEntry(
+        HexPattern.fromAngles("eqewdewqeeaa", HexDir.NORTH_WEST),
+        OpGetHostSocket
+    ) }
+
+    val GET_PORT = ACTIONS.register("get_port") { ActionRegistryEntry(
+        HexPattern.fromAngles("eqewdewqewdd", HexDir.NORTH_WEST),
+        OpGetPortSocket
+    ) }
+
+    val SET = ACTIONS.register("set") { ActionRegistryEntry(
+        HexPattern.fromAngles("eqewdewqeeaadd", HexDir.NORTH_WEST),
+        OpSetSocket
+    ) }
 
     fun register() {
         ACTIONS.register()

@@ -62,7 +62,9 @@ dependencies {
     modCompileOnly ("top.theillusivec4.caelus:caelus-forge:${caelus_version}+1.20.1:api") { transitive = false }
     modRuntimeOnly ("top.theillusivec4.caelus:caelus-forge:${caelus_version}+1.20.1") { transitive = false }
 
-    modImplementation files("${rootProject.rootDir}/libs/moreiotas-forge-1.20.1-0.1.0-3.jar")
+    modImplementation("ram.talia.moreiotas:moreiotas-forge-$minecraft_version:$more_iotas_version") { transitive = false }
+    modImplementation("ram.talia.hexal:hexal-forge-$minecraft_version:$hexal_version") { transitive = false }
+    modCompileOnly "penguinencounter.mediatransport:mediatransport-forge:$mediatransport_version+$minecraft_version"
 }
 
 processResources {
