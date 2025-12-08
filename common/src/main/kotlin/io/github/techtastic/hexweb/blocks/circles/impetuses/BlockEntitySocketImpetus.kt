@@ -2,7 +2,6 @@ package io.github.techtastic.hexweb.blocks.circles.impetuses
 
 import at.petrak.hexcasting.api.casting.circles.BlockEntityAbstractImpetus
 import at.petrak.hexcasting.api.casting.iota.ListIota
-import at.petrak.hexcasting.api.casting.iota.NullIota
 import at.petrak.hexcasting.api.casting.mishaps.Mishap
 import io.github.techtastic.hexweb.HexWeb
 import io.github.techtastic.hexweb.SocketHandler

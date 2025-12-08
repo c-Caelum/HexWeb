@@ -9,7 +9,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
-
 class BlockSocketImpetus(properties: Properties) : BlockAbstractImpetus(properties) {
     override fun newBlockEntity(blockPos: BlockPos, blockState: BlockState) = BlockEntitySocketImpetus(blockPos, blockState)
 
