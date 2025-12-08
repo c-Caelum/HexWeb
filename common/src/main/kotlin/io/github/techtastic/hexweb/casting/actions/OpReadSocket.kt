@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets
 
 object OpReadSocket: ConstMediaAction {
     override val argc: Int
-        get() = (MediaConstants.DUST_UNIT * 5).toInt()
+        get() = MediaConstants.DUST_UNIT.toInt()
 
     override fun execute(args: List<Iota>, env: CastingEnvironment): List<Iota> {
         if (env !is CircleCastEnv) throw MishapNoSpellCircle()

@@ -1,6 +1,7 @@
 package io.github.techtastic.hexweb.blocks.circles.impetuses
 
 import at.petrak.hexcasting.api.casting.circles.BlockEntityAbstractImpetus
+import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.api.casting.iota.NullIota
 import at.petrak.hexcasting.api.casting.mishaps.Mishap
 import io.github.techtastic.hexweb.HexWeb
@@ -69,8 +70,7 @@ class BlockEntitySocketImpetus(pWorldPosition: BlockPos?, pBlockState: BlockStat
                 self.startExecution(null)
                 self.executionState?.let { state ->
                     socket.getAllReceived()
-                        ?.let { state.currentImage = state.currentImage.copy(it.map(StringIota::make)) }
-                        ?: run { state.currentImage = state.currentImage.copy(listOf(NullIota())) }
+                        ?.let { state.currentImage = state.currentImage.copy(listOf(ListIota(it.map(StringIota::make)))) }
                 }
             } catch (mishap: Mishap) {
                 HexWeb.LOGGER.warn("Failed to get/create Socket!", mishap)
