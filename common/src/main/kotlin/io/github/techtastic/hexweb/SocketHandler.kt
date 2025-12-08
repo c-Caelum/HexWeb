@@ -99,12 +99,16 @@ object SocketHandler {
 
         fun hasData() = received.isNotEmpty()
 
-        fun receiveData() = received.poll()
+        fun receiveData(): ByteArray? = received.poll()
 
         fun getAllReceived(): List<String>? {
             if (received.isEmpty()) return null
-            val list = received.map { it.toString(StandardCharsets.UTF_8) }
-            received.clear()
+            val list = mutableListOf<String>()
+            var data = receiveData()
+            while (data != null && list.size < 1023) {
+                list.add(data.toString(StandardCharsets.UTF_8))
+                data = receiveData()
+            }
             return list
         }
 

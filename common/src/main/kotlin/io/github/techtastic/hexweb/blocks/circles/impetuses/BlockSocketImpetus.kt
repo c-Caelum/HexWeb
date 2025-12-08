@@ -12,6 +12,22 @@ import net.minecraft.world.level.block.state.BlockState
 class BlockSocketImpetus(properties: Properties) : BlockAbstractImpetus(properties) {
     override fun newBlockEntity(blockPos: BlockPos, blockState: BlockState) = BlockEntitySocketImpetus(blockPos, blockState)
 
+    @Deprecated("Deprecated in Java")
+    override fun onRemove(
+        pState: BlockState,
+        pLevel: Level,
+        pPos: BlockPos,
+        pNewState: BlockState,
+        pIsMoving: Boolean
+    ) {
+        pLevel.getBlockEntity(pPos, HexWebBlockEntities.SOCKET_IMPETUS.get()).ifPresent { be ->
+            try {
+                be.getOrCreateSocket().close()
+            } catch (ignored: Exception) {}
+        }
+        super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving)
+    }
+
     override fun <T : BlockEntity?> getTicker(
         pLevel: Level,
         pState: BlockState,
