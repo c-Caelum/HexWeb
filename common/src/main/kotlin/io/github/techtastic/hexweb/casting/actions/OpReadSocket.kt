@@ -4,6 +4,7 @@ import at.petrak.hexcasting.api.casting.castables.ConstMediaAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.eval.env.CircleCastEnv
 import at.petrak.hexcasting.api.casting.iota.Iota
+import at.petrak.hexcasting.api.casting.iota.NullIota
 import at.petrak.hexcasting.api.casting.mishaps.MishapBadBlock
 import at.petrak.hexcasting.api.casting.mishaps.circle.MishapNoSpellCircle
 import at.petrak.hexcasting.api.misc.MediaConstants
@@ -22,6 +23,7 @@ object OpReadSocket: ConstMediaAction {
             ?: throw MishapBadBlock(env.impetus!!.blockPos, HexWebBlocks.SOCKET_IMPETUS.get().name)
 
         val socket = imp.getOrCreateSocket()
-        return listOf(StringIota.make(socket.receiveData().toString(StandardCharsets.UTF_8)))
+        socket.receiveData()?.toString(StandardCharsets.UTF_8)?.let { return listOf(StringIota.make(it)) }
+        return listOf(NullIota())
     }
 }

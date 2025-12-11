@@ -89,6 +89,16 @@ subprojects {
 
     // Configure Maven publishing.
     publishing {
+        repositories {
+            maven {
+                url = uri("https://pkgs.dev.azure.com/hexxy-media/artifacts/_packaging/community/maven/v1")
+                credentials {
+                    username = "TechTastic"
+                    password = System.getenv("MAVEN_PASSWORD")
+                }
+            }
+        }
+
         publications {
             mavenJava(MavenPublication) {
                 artifactId = base.archivesName.get()
