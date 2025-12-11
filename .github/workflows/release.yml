@@ -62,6 +62,9 @@ jobs:
     if: ${{ inputs.publish }} == 'true'
     environment:
       name: ${{ !inputs.dry_run && 'publishing' || '' }}
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
