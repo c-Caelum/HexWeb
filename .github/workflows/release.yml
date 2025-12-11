@@ -84,7 +84,7 @@ jobs:
         run: ./gradlew forge:publishMods fabric:publishMods
 
       - name: Login to Azure
-        if: ${{ inputs.dry_run }} == 'false'
+        if: ${{ !inputs.dry_run }}
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -93,7 +93,7 @@ jobs:
 
       - name: Get Azure access token
         id: get-token
-        if: ${{ inputs.dry_run }} == 'false'
+        if: ${{ !inputs.dry_run }}
         run: |
           token=$(az account get-access-token --query accessToken --resource 499b84ac-1321-427f-aa17-267ca6975798 --output tsv)
           echo "::add-mask::$token"
@@ -105,7 +105,7 @@ jobs:
         run: ./gradlew ${{ inputs.dry_run && 'publishToMavenLocal' || 'publish' }}
 
       - name: Upload dry run artifact
-        if: ${{ inputs.dry_run }} == 'true'
+        if: ${{ inputs.dry_run }}
         uses: actions/upload-artifact@v4
         with:
           name: maven-dry-run
