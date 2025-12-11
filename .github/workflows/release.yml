@@ -13,10 +13,6 @@ on:
         options:
           - none
           - PyPI
-      dry-run:
-        description: Dry Run for Maven Publishing
-        type: boolean
-        default: false
 
 env:
   PYPI_PACKAGE: hexdoc-hexweb
@@ -61,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ inputs.publish }} == 'true'
     environment:
-      name: ${{ !inputs.dry_run && 'publishing' || '' }}
+      name: publishing
     permissions:
       contents: read
       id-token: write
@@ -84,7 +80,6 @@ jobs:
         run: ./gradlew forge:publishMods fabric:publishMods
 
       - name: Login to Azure
-        if: ${{ !inputs.dry_run }}
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -93,7 +88,6 @@ jobs:
 
       - name: Get Azure access token
         id: get-token
-        if: ${{ !inputs.dry_run }}
         run: |
           token=$(az account get-access-token --query accessToken --resource 499b84ac-1321-427f-aa17-267ca6975798 --output tsv)
           echo "::add-mask::$token"
@@ -103,11 +97,3 @@ jobs:
         env:
           MAVEN_PASSWORD: ${{ steps.get-token.outputs.token }}
         run: ./gradlew ${{ inputs.dry_run && 'publishToMavenLocal' || 'publish' }}
-
-      - name: Upload dry run artifact
-        if: ${{ inputs.dry_run }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: maven-dry-run
-          path: ~/.m2/repository/io/github/techtastic
-          if-no-files-found: error
