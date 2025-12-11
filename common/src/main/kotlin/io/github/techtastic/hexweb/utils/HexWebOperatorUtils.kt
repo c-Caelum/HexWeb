@@ -9,6 +9,7 @@ import com.google.gson.*
 import com.mojang.serialization.JsonOps
 import io.github.techtastic.hexweb.HTTPRequestsHandler
 import io.github.techtastic.hexweb.HexWeb
+import io.github.techtastic.hexweb.casting.HexWebIotaTypes
 import io.github.techtastic.hexweb.casting.iota.JsonIota
 import io.github.techtastic.hexweb.casting.iota.ResponseIota
 import io.github.techtastic.hexweb.casting.mishap.MishapBlacklistUrl
@@ -74,9 +75,7 @@ object HexWebOperatorUtils {
         IotaType.getTypeFromTag(nbt)?.let { type ->
             if (preventDeserialization(type)) return GarbageIota()
             return type.deserialize(nbt, level) ?: GarbageIota()
-        }
-
-        return JsonIota(json)
+        } ?: return JsonIota(json)
     }
 
     fun Iota.toJson(): JsonElement {

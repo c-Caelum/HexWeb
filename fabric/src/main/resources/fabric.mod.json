@@ -33,8 +33,5 @@
     "fabric-api": "*",
     "hexcasting": "*",
     "moreiotas": "*"
-  },
-  "breaks": {
-    "hexical": ">1.5.0"
   }
 }
