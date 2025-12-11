@@ -70,6 +70,8 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
+      - run: chmod +x ./gradlew
+
       - name: Build mod
         run: ./gradlew build
 
