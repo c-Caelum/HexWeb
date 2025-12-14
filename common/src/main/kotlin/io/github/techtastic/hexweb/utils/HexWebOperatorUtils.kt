@@ -35,7 +35,8 @@ object HexWebOperatorUtils {
     }
 
     fun List<Iota>.getHeaders(idx: Int, argc: Int): Array<String>? {
-        val iota = this.getOrNull(idx) ?: return null
+        val iota = this.getOrElse(idx) { NullIota() }
+        if (iota is NullIota) return null
         if (iota is ListIota) {
             val list = iota.list
             if (!list.nonEmpty) return null
@@ -61,7 +62,8 @@ object HexWebOperatorUtils {
     }
 
     fun List<Iota>.getBodyString(idx: Int, argc: Int): String? {
-        val iota = this.getOrNull(idx) ?: return null
+        val iota = this.getOrElse(idx) { NullIota() }
+        if (iota is NullIota) return null
         if (iota is JsonIota)
             return iota.getPayload().asString
         if (iota is StringIota)

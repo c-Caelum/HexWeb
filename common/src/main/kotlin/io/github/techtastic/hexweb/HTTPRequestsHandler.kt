@@ -1,7 +1,6 @@
 package io.github.techtastic.hexweb
 
 import at.petrak.hexcasting.api.casting.mishaps.MishapInvalidIota
-import com.google.gson.JsonObject
 import com.mojang.datafixers.util.Either
 import io.github.techtastic.hexweb.utils.HexWebOperatorUtils
 import ram.talia.moreiotas.api.casting.iota.StringIota
