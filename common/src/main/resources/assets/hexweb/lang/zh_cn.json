@@ -6,7 +6,7 @@
   "hexweb.mishap.invalid_json_key": "JSON iota中没有“%s”键！",
   "hexweb.mishap.cannot_json": "Iota%s无法翻译为JSON！",
   "hexweb.mishap.too_early": "试图在HTTP响应到达前访问！",
-  "hexweb.mishap.blacklist_url": "此URL已被黑名单！访问对象：%s",
+  "hexweb.mishap.filtered_url": "此URL已被黑名单！访问对象：%s",
   "hexweb.mishap.packet_too_big": "你试图发送的数据过大！%s字节超出了65535字节的限制！",
   "hexweb.mishap.no_socket": "不存在ID为%s的套接字！",
   "hexcasting.mishap.invalid_value.class.json": "一个JSON对象",

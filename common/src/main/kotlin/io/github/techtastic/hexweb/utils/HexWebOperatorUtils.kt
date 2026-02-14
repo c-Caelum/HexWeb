@@ -11,7 +11,7 @@ import io.github.techtastic.hexweb.HTTPRequestsHandler
 import io.github.techtastic.hexweb.HexWeb
 import io.github.techtastic.hexweb.casting.iota.JsonIota
 import io.github.techtastic.hexweb.casting.iota.ResponseIota
-import io.github.techtastic.hexweb.casting.mishap.MishapBlacklistUrl
+import io.github.techtastic.hexweb.casting.mishap.MishapDisallowedUrl
 import io.github.techtastic.hexweb.casting.mishap.MishapResponseError
 import io.github.techtastic.hexweb.casting.mishap.MishapTooEarly
 import io.github.techtastic.hexweb.config.HexWebConfig
@@ -122,13 +122,25 @@ object HexWebOperatorUtils {
     }
 
     fun checkBlacklist(url: String) {
-        HexWebConfig.ADDRESS_BLACKLIST.get().forEach { rule ->
-            try {
+        if (HexWebConfig.IS_WHITELIST.get()) {
+            var found = false
+            HexWebConfig.ADDRESS_FILTERS.get().forEach{ rule ->
                 if (Regex(rule).containsMatchIn(url)) {
-                    throw MishapBlacklistUrl(rule)
+                    found=true
                 }
-            } catch (e: Exception) {
-                HexWeb.LOGGER.warn("Invalid regex pattern in blacklist: $rule")
+            }
+            if (!found) {
+                throw MishapDisallowedUrl(url)
+            }
+        } else {
+            HexWebConfig.ADDRESS_FILTERS.get().forEach { rule ->
+                try {
+                    if (Regex(rule).containsMatchIn(url)) {
+                        throw MishapDisallowedUrl(url)
+                    }
+                } catch (e: Exception) {
+                    HexWeb.LOGGER.warn("Invalid regex pattern in blacklist: $rule")
+                }
             }
         }
     }

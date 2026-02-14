@@ -10,6 +10,7 @@ import io.github.techtastic.hexweb.casting.actions.*
 import io.github.techtastic.hexweb.casting.actions.spells.OpRequest
 import io.github.techtastic.hexweb.casting.actions.spells.OpSendSocket
 import io.github.techtastic.hexweb.casting.actions.spells.OpSetSocket
+import io.github.techtastic.hexweb.casting.actions.OpJsonToPatternList
 
 object HexWebActions {
     private val ACTIONS = DeferredRegister.create(MOD_ID, HexRegistries.ACTION)
@@ -36,6 +37,10 @@ object HexWebActions {
     val HAS_ELEMENT = ACTIONS.register("has_element") { ActionRegistryEntry(
         HexPattern.fromAngles("edadee", HexDir.NORTH_WEST),
         OpHasElement
+    )}
+    val STRING_TO_JSON =  ACTIONS.register("json_to_pattern_list") { ActionRegistryEntry(
+        HexPattern.fromAngles("edadeeda", HexDir.NORTH_WEST),
+        OpJsonToPatternList
     )}
 
 
