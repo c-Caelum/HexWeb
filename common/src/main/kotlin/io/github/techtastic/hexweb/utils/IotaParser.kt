@@ -6,13 +6,11 @@ import at.petrak.hexcasting.api.casting.math.HexDir
 import at.petrak.hexcasting.api.casting.math.HexPattern
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
-import io.github.techtastic.hexweb.HexWeb
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.phys.Vec3
 import org.jblas.DoubleMatrix
 import ram.talia.moreiotas.api.casting.iota.StringIota
 import java.util.*
-import kotlin.reflect.typeOf
 
 object IotaParser {
     fun JsonToIota(json : JsonElement, env : CastingEnvironment) : Iota {
