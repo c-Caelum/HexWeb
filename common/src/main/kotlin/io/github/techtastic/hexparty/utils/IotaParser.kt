@@ -47,6 +47,11 @@ object IotaParser {
             if (x.isBoolean) {return BooleanIota(x.asBoolean)}
             return StringIota.make(x.asString)
         }
+        if (this.isJsonArray) {
+            return ListIota(this.asJsonArray.map {value ->
+                value.JsonToIota(env)
+            })
+        }
         if (this.isJsonObject) {
             val jsonObj = this.asJsonObject
 
@@ -162,7 +167,11 @@ object IotaParser {
     }
     fun Iota.json_from_iota(env: CastingEnvironment) : JsonElement {
         if(this is ListIota){
-            return this.json_from_list(env)
+            val temp = JsonArray()
+            this.list.forEach{value ->
+                temp.add(value.json_from_iota(env))
+            }
+            return temp
         }
         if(this is Vec3Iota) {
             val temp = JsonObject()

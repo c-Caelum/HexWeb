@@ -17,11 +17,10 @@ import ram.talia.moreiotas.api.casting.iota.StringIota
 
 object OpResponseJson: ConstMediaAction {
     override val argc: Int
-        get() = 2
+        get() = 1
 
     override fun execute(args: List<Iota>, env: CastingEnvironment): List<Iota> {
-        val is_decoded = args.getBool(0,argc)
-        val response = args.getResponse(1, argc)
+        val response = args.getResponse(0, argc)
 
         val json = try { JsonParser.parseString(response.body()) } catch (ignored: Exception) {
             throw MishapCannotJson(StringIota.make(response.body()))

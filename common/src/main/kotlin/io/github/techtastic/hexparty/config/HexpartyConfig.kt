@@ -24,7 +24,7 @@ object HexpartyConfig {
 
         COPYPARTY_URL = BUILDER
             .comment("The base url that http requests are appended to.")
-            .define("Copyparty URL","https://copyparty.chloes.media")
+            .define("Copyparty URL","https://copyparty.chloes.media/")
 
         BUILDER.pop()
         SPEC = BUILDER.build()
