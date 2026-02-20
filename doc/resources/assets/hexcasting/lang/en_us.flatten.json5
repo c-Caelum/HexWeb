@@ -1,8 +1,8 @@
 {
   hexdoc: {
-    "hexweb": {
-      title: "HexWeb Book",
-      description: "The HexWeb Book, all in one place.",
+    "hexparty": {
+      title: "hexparty Book",
+      description: "The hexparty Book, all in one place.",
     },
   }
 }

@@ -105,7 +105,7 @@ publishMods {
     modLoaders.add("quilt")
 
     version = project.version + "-fabric"
-    displayName = "HexWeb $project.version [Fabric]"
+    displayName = "hexparty $project.version [Fabric]"
 
     curseforge {
         accessToken = System.getenv("CURSEFORGE_TOKEN") == null ? "" : System.getenv("CURSEFORGE_TOKEN")

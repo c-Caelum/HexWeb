@@ -1,47 +1,47 @@
 {
-  "name": "hexweb.entry.socket_patterns",
+  "name": "hexparty.entry.socket_patterns",
   "category": "hexcasting:patterns",
-  "icon": "hexweb:impetus/socket",
+  "icon": "hexparty:impetus/socket",
   "sortnum": 25,
   "advancement": "hexcasting:enlightenment",
   "entry_color": "54398a",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "hexweb.page.socket_patterns.entry"
+      "text": "hexparty.page.socket_patterns.entry"
     },
     {
       "type": "hexcasting:brainsweep",
-      "recipe": "hexweb:brainsweep/impetus_socket",
-      "text": "hexweb.page.brainsweeping.impetus_socket"
+      "recipe": "hexparty:brainsweep/impetus_socket",
+      "text": "hexparty.page.brainsweeping.impetus_socket"
     },
     {
       "type": "patchouli:text",
-      "text": "hexweb.page.socket_patterns.usage"
+      "text": "hexparty.page.socket_patterns.usage"
     },
     {
       "type": "hexcasting:pattern",
-      "op_id": "hexweb:read",
-      "anchor": "hexweb:read",
+      "op_id": "hexparty:read",
+      "anchor": "hexparty:read",
       "input": "",
       "output": "str",
-      "text": "hexweb.page.socket_patterns.read"
+      "text": "hexparty.page.socket_patterns.read"
     },
     {
       "type": "hexcasting:pattern",
-      "op_id": "hexweb:get_host",
-      "anchor": "hexweb:get_host",
+      "op_id": "hexparty:get_host",
+      "anchor": "hexparty:get_host",
       "input": "vec",
       "output": "str | null",
-      "text": "hexweb.page.socket_patterns.get_host"
+      "text": "hexparty.page.socket_patterns.get_host"
     },
     {
       "type": "hexcasting:pattern",
-      "op_id": "hexweb:get_port",
-      "anchor": "hexweb:get_port",
+      "op_id": "hexparty:get_port",
+      "anchor": "hexparty:get_port",
       "input": "vec",
       "output": "int",
-      "text": "hexweb.page.socket_patterns.get_port"
+      "text": "hexparty.page.socket_patterns.get_port"
     }
   ]
 }
