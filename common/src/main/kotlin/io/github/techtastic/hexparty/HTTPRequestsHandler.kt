@@ -43,6 +43,14 @@ object HTTPRequestsHandler {
                 responses[uuid] = Either.left(res)
         }
     }
+    private fun queueRequest(uuid: UUID, req: HttpRequest,function: Function<String>) {
+        client.sendAsync(req, HttpResponse.BodyHandlers.ofString()).whenComplete { res, err ->
+            if (err != null)
+                responses[uuid] = Either.right(err)
+            else if (res != null)
+                responses[uuid] = Either.left(res)
+        }
+    }
 
     fun getResponse(uuid: UUID) = this.responses[uuid]
 

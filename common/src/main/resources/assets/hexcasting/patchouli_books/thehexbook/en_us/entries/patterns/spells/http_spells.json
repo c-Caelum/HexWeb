@@ -26,7 +26,7 @@
       "op_id": "hexparty:get_response",
       "anchor": "hexparty:get_response",
       "input": "response",
-      "output": "json",
+      "output": "num, string",
       "text": "hexparty.page.http_spells.get_response"
     },
     {
@@ -34,7 +34,7 @@
       "op_id": "hexparty:response_json",
       "anchor": "hexparty:response_json",
       "input": "response",
-      "output": "json | any",
+      "output": "any",
       "text": "hexparty.page.http_spells.response_json"
     },
     {

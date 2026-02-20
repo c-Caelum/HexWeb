@@ -21,7 +21,7 @@
 
   "hexparty.entry.http_spells": "HTTP Spells",
   "hexparty.page.http_spells.entry": "While pondering the depths of one's mind, Sir Bernes-Lee caught a glimpse into another universe. With this view fresh in his mind, he quickly conjured a JSON object, imbued it with information, and sent it hurdling into the other universe.$(br)These are the patterns recovered after Berners-Lee was found dead having received enough information back to fry his mind.",
-  "hexparty.page.http_spells.explanation": "To use the following pattern, one needs a $(thing)URL$() as a string alone.$(br)Optionally, one may also include a $(thing)HTTP method$() as a string (defaults to GET if omitted), $(thing)headers$() as either a list of key-value string pairs ([key, value,...]) or a JSON object with string values, and a $(thing)body$() as either a JSON or a string.$(br2)Supported $(thing)HTTP Methods$():$(li)GET$(li)POST$(li)PUT$(li)DELETE$(li)HEAD$(li)OPTIONS$(li)PATCH$(li)TRACE",
+  "hexparty.page.http_spells.explanation": "To use the following pattern, one needs a $(thing)URL$() as a string alone.$(br)Optionally, one may also include a $(thing)HTTP method$() as a string (defaults to GET if omitted), $(thing)headers$() as a list of key-value string pairs ([key, value,...]), and a $(thing)body$() as a string.$(br2)Supported $(thing)HTTP Methods$():$(li)GET$(li)POST$(li)PUT$(li)DELETE$(li)HEAD$(li)OPTIONS$(li)PATCH$(li)TRACE",
   "hexcasting.action.hexparty:request": "Request",
   "hexparty.page.http_spells.request": "$(br)Sends an HTTP request to the given $(thing)URL$(). Optionally, the $(thing)method$() used, $(thing)headers$() attached, and the $(thing)body$() of data sent with it may also be specified. Returns a $(thing)Response$() which will be Truthy when the response is received.",
   "hexcasting.action.hexparty:get_response": "Get Response",
@@ -29,7 +29,7 @@
   "hexcasting.action.hexparty:get_copyparty": "Get Copyparty",
   "hexparty.page.http_spells.get_copyparty": "Given a path and a password, attempts to make a request to the hexparty path given. You *can* do this with the request pattern, but it is significantly easier to do it this way.",
   "hexcasting.action.hexparty:set_copyparty": "Set Copyparty",
-  "hexparty.page.http_spells.set_copyparty": "\nGiven a path, iotas, and password, attempts to set the file at that hexparty path to the given iotas. You *can* do this with the Request pattern, but it is significantly better to do it this way.",
+  "hexparty.page.http_spells.set_copyparty": "$(br)Given a path, iotas, and password, attempts to set the file at that hexparty path to the given iotas. You *can* do this with the Request pattern, but it is significantly better to do it this way.",
   "hexcasting.action.hexparty:response_json": "Get Response II",
-  "hexparty.page.http_spells.response_json": "\nTurns the response's body into a pattern list, using json as an intermediary."
+  "hexparty.page.http_spells.response_json": "$(br)Turns the response's body into a pattern list, using json as an intermediary. (Ducky Peripherals' mappings)"
 }

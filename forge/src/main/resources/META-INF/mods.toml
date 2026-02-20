@@ -6,8 +6,8 @@ license = "MIT License"
 [[mods]]
 modId = "hexparty"
 version = "${version}"
-displayName = "hexparty"
-authors = "TechTastic"
+displayName = "Hexparty"
+authors = "Techtastic, Caelum"
 description = '''
 A Hexcasting Addon for Web interaction!
 '''
