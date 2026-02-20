@@ -7,7 +7,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'hexweb'
+rootProject.name = 'hexparty'
 
 include 'common'
 include 'fabric'

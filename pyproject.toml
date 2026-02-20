@@ -8,8 +8,8 @@ build-backend = "hatchling.build"
 # project metadata
 
 [project]
-name = "hexdoc-hexweb"
-description = "Python web book docgen and hexdoc plugin for HexWeb."
+name = "hexdoc-hexparty"
+description = "Python web book docgen and hexdoc plugin for hexparty."
 readme = "doc/README.md"
 authors = [
     { name="TechTastic" },
@@ -19,15 +19,15 @@ requires-python = ">=3.11"
 dynamic = ["version", "dependencies", "optional-dependencies"]
 
 [project.urls]
-Homepage = "https://techtastic.github.io/HexWeb/"
-Source = "https://github.com/TechTastic/HexWeb"
+Homepage = "https://techtastic.github.io/hexparty/"
+Source = "https://github.com/TechTastic/hexparty"
 
 # Gradle version/deps
 
 [tool.hatch.version]
 scheme = "gradle"
 source = "gradle-properties"
-py-path = "doc/src/hexdoc_hexweb/__version__.py"
+py-path = "doc/src/hexdoc_hexparty/__version__.py"
 key = "mod_version"
 
 [tool.hatch.metadata.hooks.gradle-properties]
@@ -44,12 +44,12 @@ dev = [
 
 [tool.hatch.build]
 only-include = [
-    "doc/src/hexdoc_hexweb",
+    "doc/src/hexdoc_hexparty",
     "gradle.properties",
 ]
 artifacts = [
-    "/doc/src/hexdoc_hexweb/_export/generated",
-    "/doc/src/hexdoc_hexweb/__gradle_version__.py",
+    "/doc/src/hexdoc_hexparty/_export/generated",
+    "/doc/src/hexdoc_hexparty/__gradle_version__.py",
 ]
 
 [tool.hatch.build.targets.wheel]
@@ -58,7 +58,7 @@ sources = ["doc/src"]
 # hexdoc entry points
 
 [project.entry-points.hexdoc]
-hexweb = "hexdoc_hexweb._hooks:HexwebPlugin"
+hexparty = "hexdoc_hexparty._hooks:hexpartyPlugin"
 
 # linting
 

@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "io.github.techtastic.hexparty.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+  ],
+  "mixins": [
+    "MixinHexActions",
+    "MixinHexIotaTypes"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

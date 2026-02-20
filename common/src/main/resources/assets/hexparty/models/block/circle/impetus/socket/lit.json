@@ -1,0 +1,9 @@
+{
+  "parent": "hexparty:block/circle/impetus/socket/dim",
+  "textures": {
+    "top": "hexparty:block/circle/impetus/socket/top_lit",
+    "front": "hexparty:block/circle/impetus/socket/front_lit",
+    "back": "hexcasting:block/circle/impetus/back_lit",
+    "side": "hexparty:block/circle/impetus/socket/side_lit"
+  }
+}

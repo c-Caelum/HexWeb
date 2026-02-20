@@ -5,7 +5,7 @@ plugins {
 
 loom {
     forge {
-        mixinConfig "hexweb.mixins.json"
+        mixinConfig "hexparty.mixins.json"
     }
 }
 
@@ -92,7 +92,7 @@ publishMods {
     modLoaders.add("forge")
 
     version = project.version + "-forge"
-    displayName = "HexWeb $project.version [Forge]"
+    displayName = "hexparty $project.version [Forge]"
     curseforge {
         accessToken = System.getenv("CURSEFORGE_TOKEN") == null ? "" : System.getenv("CURSEFORGE_TOKEN")
         projectId = curseforge_id

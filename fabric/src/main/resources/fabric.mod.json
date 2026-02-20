@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "hexweb",
+  "id": "hexparty",
   "version": "${version}",
-  "name": "HexWeb",
+  "name": "hexparty",
   "description": "A Hexcasting Addon for Web interaction!",
   "authors": [
     "TechTastic"
@@ -12,18 +12,18 @@
     "sources": "https://github.com/FabricMC/fabric-example-mod"
   },
   "license": "MIT License",
-  "icon": "assets/hexweb/logo.webp",
+  "icon": "assets/hexparty/logo.webp",
   "environment": "*",
   "entrypoints": {
     "main": [
       {
         "adapter": "kotlin",
-        "value": "io.github.techtastic.hexweb.fabric.HexWebFabric"
+        "value": "io.github.techtastic.hexparty.fabric.hexpartyFabric"
       }
     ]
   },
   "mixins": [
-    "hexweb.mixins.json"
+    "hexparty.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.16.5",

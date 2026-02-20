@@ -5,23 +5,23 @@ _src_path: gh:hexdoc-dev/hexdoc-hexcasting-template
 author: TechTastic
 book_id: hexcasting:thehexbook
 default_branch: master
-github_repo: HexWeb
+github_repo: hexparty
 gradle_mod_version_key: mod_version
-hexdoc_mod_plugin_classname: HexwebModPlugin
-hexdoc_plugin_classname: HexwebPlugin
+hexdoc_mod_plugin_classname: hexpartyModPlugin
+hexdoc_plugin_classname: hexpartyPlugin
 java_lang:
     ext: kt
     src: kotlin
-java_package: io.github.techtastic.hexweb
-mod_display_name: HexWeb
-modid: hexweb
+java_package: io.github.techtastic.hexparty
+mod_display_name: hexparty
+modid: hexparty
 multiloader: true
-package_export_root: doc/src/hexdoc_hexweb/_export
-package_name: hexdoc-hexweb
-package_slug: hexdoc_hexweb
-package_src: doc/src/hexdoc_hexweb
-pages_url: https://techtastic.github.io/HexWeb/
+package_export_root: doc/src/hexdoc_hexparty/_export
+package_name: hexdoc-hexparty
+package_slug: hexdoc_hexparty
+package_src: doc/src/hexdoc_hexparty
+pages_url: https://techtastic.github.io/hexparty/
 pattern_regex:
     per_world_value: 'true'
     regex: make\(\s*"(?P<name>[a-zA-Z0-9_\/]+)",\s*(?:new )?(?:ActionRegistryEntry|OperationAction)\(\s*HexPattern\.fromAngles\(\s*"(?P<signature>[aqweds]+)",\s*HexDir.(?P<startdir>\w+)\)
-pattern_registry: casting/HexWebActions.kt
+pattern_registry: casting/hexpartyActions.kt

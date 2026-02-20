@@ -15,7 +15,7 @@ on:
           - PyPI
 
 env:
-  PYPI_PACKAGE: hexdoc-hexweb
+  PYPI_PACKAGE: hexdoc-hexparty
   MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
   CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
 

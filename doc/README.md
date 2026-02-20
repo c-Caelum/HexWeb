@@ -1,6 +1,6 @@
-# hexdoc-hexweb
+# hexdoc-hexparty
 
-Python web book docgen and [hexdoc](https://pypi.org/project/hexdoc) plugin for HexWeb.
+Python web book docgen and [hexdoc](https://pypi.org/project/hexdoc) plugin for hexparty.
 
 ## Version scheme
 
@@ -32,9 +32,9 @@ pip install -e .[dev]
 
 For local testing, create a file called `.env` in the repo root following this template:
 ```sh
-GITHUB_REPOSITORY=TechTastic/HexWeb
+GITHUB_REPOSITORY=TechTastic/hexparty
 GITHUB_SHA=master
-GITHUB_PAGES_URL=https://techtastic.github.io/HexWeb/
+GITHUB_PAGES_URL=https://techtastic.github.io/hexparty/
 ```
 
 Useful commands:

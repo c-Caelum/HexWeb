@@ -1,9 +1,0 @@
-{
-  "parent": "hexweb:block/circle/impetus/socket/dim",
-  "textures": {
-    "top": "hexweb:block/circle/impetus/socket/top_lit",
-    "front": "hexweb:block/circle/impetus/socket/front_lit",
-    "back": "hexcasting:block/circle/impetus/back_lit",
-    "side": "hexweb:block/circle/impetus/socket/side_lit"
-  }
-}

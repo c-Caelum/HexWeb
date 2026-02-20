@@ -1,4 +1,4 @@
-modid = "hexweb"
+modid = "hexparty"
 book = "hexcasting:thehexbook"
 default_lang = "en_us"
 default_branch = "master"
@@ -15,18 +15,18 @@ resource_dirs = [  # top takes priority
     { modid="minecraft" },
     { modid="hexdoc" },
 ]
-export_dir = "src/hexdoc_hexweb/_export/generated"
+export_dir = "src/hexdoc_hexparty/_export/generated"
 
 [template]
 icon = "icon.png"
 include = [
-    "hexweb",
+    "hexparty",
     "hexcasting",
     "hexdoc",
 ]
 
 [template.args]
-mod_name = "HexWeb"
+mod_name = "hexparty"
 author = "TechTastic"
 show_landing_text = false
 
@@ -37,7 +37,7 @@ _pattern_regex = { "!Raw"='\"(?P<name>[a-zA-Z0-9_\/]+)\"\)\s*{\s*(?:ActionRegist
 _per_world_value = "true"
 
 [[extra.hexcasting.pattern_stubs]]
-path = "{^^^_common.package}/casting/HexWebActions.kt"
+path = "{^^^_common.package}/casting/hexpartyActions.kt"
 regex = "{^_pattern_regex}"
 per_world_value = "{^_per_world_value}"
 
@@ -45,12 +45,12 @@ per_world_value = "{^_per_world_value}"
 
 [_common]
 src = "../common/src"
-package = "{src}/main/kotlin/io/github/techtastic/hexweb"
+package = "{src}/main/kotlin/io/github/techtastic/hexparty"
 
 [_fabric]
 src = "../fabric/src"
-package = "{src}/main/kotlin/io/github/techtastic/hexweb/fabric"
+package = "{src}/main/kotlin/io/github/techtastic/hexparty/fabric"
 
 [_forge]
 src = "../forge/src"
-package = "{src}/main/kotlin/io/github/techtastic/hexweb/forge"
+package = "{src}/main/kotlin/io/github/techtastic/hexparty/forge"

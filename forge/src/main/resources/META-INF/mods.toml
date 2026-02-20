@@ -4,44 +4,44 @@ loaderVersion = "[4,)"
 license = "MIT License"
 
 [[mods]]
-modId = "hexweb"
+modId = "hexparty"
 version = "${version}"
-displayName = "HexWeb"
+displayName = "hexparty"
 authors = "TechTastic"
 description = '''
 A Hexcasting Addon for Web interaction!
 '''
 logoFile = "logo.webp"
 
-[[dependencies.hexweb]]
+[[dependencies.hexparty]]
 modId = "forge"
 mandatory = true
 versionRange = "[47,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.hexweb]]
+[[dependencies.hexparty]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.20.1,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.hexweb]]
+[[dependencies.hexparty]]
 modId = "architectury"
 mandatory = true
 versionRange = "[9.2.14,)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies.hexweb]]
+[[dependencies.hexparty]]
 modId = "hexcasting"
 mandatory = true
 versionRange = "[0.11.2,)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies.hexweb]]
+[[dependencies.hexparty]]
 modId = "moreiotas"
 mandatory = true
 versionRange = "[0.1.0,)"

@@ -1,5 +1,5 @@
 {
-  "name": "hexweb.entry.json_patterns",
+  "name": "hexparty.entry.json_patterns",
   "category": "hexcasting:patterns",
   "icon": "minecraft:sculk_sensor",
   "sortnum": 25,
@@ -7,63 +7,63 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "hexweb.page.json_patterns.entry"
+      "text": "hexparty.page.json_patterns.entry"
     },
     {
       "type": "hexcasting:pattern",
-      "op_id": "hexweb:create_json",
-      "anchor": "hexweb:create_json",
+      "op_id": "hexparty:create_json",
+      "anchor": "hexparty:create_json",
       "input": "",
       "output": "json",
-      "text": "hexweb.page.json_patterns.create_json"
+      "text": "hexparty.page.json_patterns.create_json"
     },
     {
       "type": "hexcasting:pattern",
-      "op_id": "hexweb:parse_json",
-      "anchor": "hexweb:parse_json",
+      "op_id": "hexparty:parse_json",
+      "anchor": "hexparty:parse_json",
       "input": "str",
       "output": "json",
-      "text": "hexweb.page.json_patterns.parse_json"
+      "text": "hexparty.page.json_patterns.parse_json"
     },
     {
       "type": "hexcasting:pattern",
-      "op_id": "hexweb:has_element",
-      "anchor": "hexweb:has_element",
+      "op_id": "hexparty:has_element",
+      "anchor": "hexparty:has_element",
       "input": "json, str",
       "output": "bool",
-      "text": "hexweb.page.json_patterns.has_element"
+      "text": "hexparty.page.json_patterns.has_element"
     },
     {
       "type": "hexcasting:pattern",
-      "op_id": "hexweb:get_element",
-      "anchor": "hexweb:get_element",
+      "op_id": "hexparty:get_element",
+      "anchor": "hexparty:get_element",
       "input": "json, str",
       "output": "any",
-      "text": "hexweb.page.json_patterns.get_element"
+      "text": "hexparty.page.json_patterns.get_element"
     },
     {
       "type": "hexcasting:pattern",
-      "op_id": "hexweb:set_element",
-      "anchor": "hexweb:set_element",
+      "op_id": "hexparty:set_element",
+      "anchor": "hexparty:set_element",
       "input": "json, str, any",
       "output": "json",
-      "text": "hexweb.page.json_patterns.set_element"
+      "text": "hexparty.page.json_patterns.set_element"
     },
     {
       "type":  "hexcasting:pattern",
-      "op_id":  "hexweb:json_to_pattern_list",
-      "anchor": "hexweb:json_to_pattern_list",
+      "op_id":  "hexparty:json_to_pattern_list",
+      "anchor": "hexparty:json_to_pattern_list",
       "input": "json",
       "output": "list",
-      "text": "hexweb.page.json.patterns.json_to_pattern_list"
+      "text": "hexparty.page.json.patterns.json_to_pattern_list"
     },
     {
       "type":  "hexcasting:pattern",
-      "op_id":  "hexweb:json_from_pattern_list",
-      "anchor": "hexweb:json_from_pattern_list",
+      "op_id":  "hexparty:json_from_pattern_list",
+      "anchor": "hexparty:json_from_pattern_list",
       "input": "list",
       "output": "json",
-      "text": "hexweb.page.json.patterns.json_from_pattern_list"
+      "text": "hexparty.page.json.patterns.json_from_pattern_list"
     }
   ]
 }

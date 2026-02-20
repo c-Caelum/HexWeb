@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "hexcasting:entity",
+    "hexparty:response",
+    {
+      "id": "hexical:pigment",
+      "required": false
+    },
+    {
+      "id": "#hexal:illegal_interworld",
+      "required": false
+    }
+  ]
+}
