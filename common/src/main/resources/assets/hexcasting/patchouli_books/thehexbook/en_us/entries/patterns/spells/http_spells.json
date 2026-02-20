@@ -28,6 +28,30 @@
       "input": "response",
       "output": "json",
       "text": "hexweb.page.http_spells.get_response"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexweb:response_json",
+      "anchor": "hexweb:response_json",
+      "input": "response, bool",
+      "output": "json",
+      "text": "hexweb.page.http_spells.response_json"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexweb:get_copyparty",
+      "anchor": "hexweb:get_copyparty",
+      "input": "path, password",
+      "output": "response",
+      "text": "hexweb.page.http_spells.get_copyparty"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexweb:set_copyparty",
+      "anchor": "hexweb:set_copyparty",
+      "input": "path, [iota], password",
+      "output": "response",
+      "text": "hexweb.page.http_spells.set_copyparty"
     }
   ]
 }

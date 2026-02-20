@@ -20,12 +20,15 @@ import net.minecraft.nbt.NbtOps
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.TagKey
+import net.minecraft.world.entity.player.Player
+import ram.talia.hexal.api.linkable.PlayerLinkstore
 import ram.talia.moreiotas.api.casting.iota.StringIota
 import java.net.http.HttpResponse
 import kotlin.jvm.optionals.getOrNull
 
 object HexWebOperatorUtils {
     val CANNOT_DESERIALIZE = TagKey.create(HexRegistries.IOTA_TYPE, ResourceLocation(HexWeb.MOD_ID, "cannot_deserialize"));
+    val rule = Regex(HexWebConfig.ADDRESS_FILTERS.get().joinToString(separator = "|") { "($it)" })
 
     fun List<Iota>.getJsonObject(idx: Int, argc: Int): JsonObject {
         val iota = this.getOrNull(idx) ?: throw MishapNotEnoughArgs(idx + 1, this.size)
@@ -34,15 +37,15 @@ object HexWebOperatorUtils {
         throw MishapInvalidIota.ofType(iota, if (argc == 0) idx else argc - (idx + 1), "json")
     }
 
-    fun List<Iota>.getHeaders(idx: Int, argc: Int): Array<String>? {
+    fun List<Iota>.getHeaders(idx: Int, argc: Int): List<String>? {
         val iota = this.getOrElse(idx) { NullIota() }
         if (iota is NullIota) return null
         if (iota is ListIota) {
             val list = iota.list
             if (!list.nonEmpty) return null
-            if (list.size() % 2 != 0 || list.any { iota -> iota !is StringIota })
+            if (list.size() % 2 != 0 || list.any { iota -> iota !is StringIota || iota.string == "user-agent"})
                 throw MishapInvalidIota.ofType(iota, if (argc == 0) idx else argc - (idx + 1), "headers.list")
-            return list.map { iota -> (iota as StringIota).string }.toTypedArray()
+            return list.map { iota -> (iota as StringIota).string }
         }
         if (iota is JsonIota) {
             val json = iota.json.asMap()
@@ -54,7 +57,7 @@ object HexWebOperatorUtils {
                 list.add(key)
                 list.add(value.asJsonPrimitive.asString)
             }
-            return list.toTypedArray()
+            return list
         }
         // Handle Maps
         // Handle Dict
@@ -100,9 +103,12 @@ object HexWebOperatorUtils {
 
         val json = this.asJsonObject
         val nbt = JsonOps.INSTANCE.convertTo(NbtOps.INSTANCE, json) as? CompoundTag
+        HexWeb.LOGGER.warn("$nbt")
         return IotaType.getTypeFromTag(nbt)?.let { type ->
+
             if (preventDeserialization(type)) GarbageIota()
             type.deserialize(nbt, level) ?: GarbageIota()
+
         } ?: JsonIota(json)
     }
 
@@ -121,27 +127,11 @@ object HexWebOperatorUtils {
         return NbtOps.INSTANCE.convertTo(JsonOps.INSTANCE, this.serialize())
     }
 
+
+
     fun checkBlacklist(url: String) {
-        if (HexWebConfig.IS_WHITELIST.get()) {
-            var found = false
-            HexWebConfig.ADDRESS_FILTERS.get().forEach{ rule ->
-                if (Regex(rule).containsMatchIn(url)) {
-                    found=true
-                }
-            }
-            if (!found) {
-                throw MishapDisallowedUrl(url)
-            }
-        } else {
-            HexWebConfig.ADDRESS_FILTERS.get().forEach { rule ->
-                try {
-                    if (Regex(rule).containsMatchIn(url)) {
-                        throw MishapDisallowedUrl(url)
-                    }
-                } catch (e: Exception) {
-                    HexWeb.LOGGER.warn("Invalid regex pattern in blacklist: $rule")
-                }
-            }
+        if (rule.containsMatchIn(url) != HexWebConfig.IS_WHITELIST.get()) {
+            throw MishapDisallowedUrl(url)
         }
     }
 

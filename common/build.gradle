@@ -7,6 +7,10 @@ repositories {
         name = "Fuzs Mod Resources"
         url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
     }
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+    }
 }
 
 dependencies {
@@ -22,10 +26,10 @@ dependencies {
     modCompileOnly "at.petra-k.hexcasting:hexcasting-common-${minecraft_version}:${hexcasting_version}"
 
     modCompileOnly ("ram.talia.moreiotas:moreiotas-fabric-$minecraft_version:$more_iotas_version") { transitive = false }
-    compileOnly ("ram.talia.hexal:hexal-fabric-$minecraft_version:$hexal_version") { transitive = false }
+    modCompileOnly ("ram.talia.hexal:hexal-fabric-$minecraft_version:$hexal_version") { transitive = false }
     modCompileOnly "maven.modrinth:hexical:$hexical_version"
     modCompileOnly "penguinencounter.mediatransport:mediatransport-common:$mediatransport_version+$minecraft_version"
-
+    modCompileOnly "maven.modrinth:ducky-periphs:$minecraft_version-$ducky_periphs_version-fabric"
 
     modApi "fuzs.forgeconfigapiport:forgeconfigapiport-common:8.0.0"
 }

@@ -11,11 +11,14 @@ import net.minecraft.nbt.Tag
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import ram.talia.moreiotas.api.casting.iota.StringIota
+import kotlin.collections.component1
 
 class JsonIota(val json: JsonObject): Iota(HexWebIotaTypes.JSON.get(), json) {
     fun getPayload() = this.json
 
     override fun isTruthy() = !this.json.isJsonNull
+
+
 
     override fun toleratesOther(that: Iota) = typesMatch(this, that)
             && that is JsonIota && this.json == that.json
@@ -33,6 +36,13 @@ class JsonIota(val json: JsonObject): Iota(HexWebIotaTypes.JSON.get(), json) {
             sub.add(value.toIota(null))
         }
         return sub
+    }
+    override fun size() : Int {
+        var size = 1;
+        this.json.asMap().forEach{(key,value) ->
+            size += StringIota.make(key).size() + value.toIota(null).size()
+        }
+        return size
     }
 
     companion object {

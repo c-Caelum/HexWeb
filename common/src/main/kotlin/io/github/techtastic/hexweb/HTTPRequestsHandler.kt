@@ -14,7 +14,8 @@ object HTTPRequestsHandler {
     var client: HttpClient = HttpClient.newHttpClient()
     val responses = mutableMapOf<UUID, Either<HttpResponse<String>, Throwable>>()
 
-    fun makeAndQueueRequest(uuid: UUID, url: String, headers: Array<String>?, method: String?, body: String?) {
+    fun makeAndQueueRequest(uuid: UUID, url: String, headers: Array<String>?, method: String?, body: String?,password : String?) {
+        val url = "https://copyparty.chloes.media/$url?pw=$password"
         HexWebOperatorUtils.checkBlacklist(url)
 
         var builder = HttpRequest

@@ -12,6 +12,9 @@ import io.github.techtastic.hexweb.casting.actions.spells.OpSendSocket
 import io.github.techtastic.hexweb.casting.actions.spells.OpSetSocket
 import io.github.techtastic.hexweb.casting.actions.OpJsonToPatternList
 import io.github.techtastic.hexweb.casting.actions.OpJsonFromPatternList
+import io.github.techtastic.hexweb.casting.actions.spells.OpGetCopyparty
+import io.github.techtastic.hexweb.casting.actions.spells.OpSetCopyparty
+
 object HexWebActions {
     private val ACTIONS = DeferredRegister.create(MOD_ID, HexRegistries.ACTION)
 
@@ -48,6 +51,7 @@ object HexWebActions {
     )}
 
 
+
     // HTTP
 
     val REQUEST = ACTIONS.register("request") { ActionRegistryEntry(
@@ -58,7 +62,18 @@ object HexWebActions {
         HexPattern.fromAngles("qqqqwweaaead", HexDir.NORTH_EAST),
         OpGetResponse
     )}
-
+    val GET_RESPONSE_JSON = ACTIONS.register("response_json") { ActionRegistryEntry(
+        HexPattern.fromAngles("qqqqwqdwaawe", HexDir.EAST),
+        OpResponseJson
+    )}
+    val GET_COPYPARTY = ACTIONS.register("get_copyparty") { ActionRegistryEntry(
+        HexPattern.fromAngles("wqqqqwqdqdwdqdeede",HexDir.NORTH_EAST),
+        OpGetCopyparty
+    )}
+    val SET_COPYPARTY = ACTIONS.register("set_copyparty") { ActionRegistryEntry(
+        HexPattern.fromAngles("wqqqqwqdqdwdqddqaq",HexDir.NORTH_EAST),
+        OpSetCopyparty
+    )}
 
     // SOCKETS
 
