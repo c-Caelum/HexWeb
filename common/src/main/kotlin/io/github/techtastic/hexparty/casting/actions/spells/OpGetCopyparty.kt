@@ -5,7 +5,6 @@ import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.eval.env.CircleCastEnv
 import at.petrak.hexcasting.api.casting.iota.Iota
 import io.github.techtastic.hexparty.HTTPRequestsHandler
-import io.github.techtastic.hexparty.hexparty
 import io.github.techtastic.hexparty.casting.iota.ResponseIota
 import ram.talia.moreiotas.api.getString
 import java.util.*

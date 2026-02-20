@@ -33,8 +33,8 @@
       "type": "hexcasting:pattern",
       "op_id": "hexparty:response_json",
       "anchor": "hexparty:response_json",
-      "input": "response, bool",
-      "output": "json",
+      "input": "response",
+      "output": "json | any",
       "text": "hexparty.page.http_spells.response_json"
     },
     {

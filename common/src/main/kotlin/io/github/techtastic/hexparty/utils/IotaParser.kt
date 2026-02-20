@@ -4,20 +4,14 @@ import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.iota.*
 import at.petrak.hexcasting.api.casting.math.HexDir
 import at.petrak.hexcasting.api.casting.math.HexPattern
-import at.petrak.hexcasting.common.lib.HexRegistries
 import at.petrak.hexcasting.common.lib.hex.HexIotaTypes
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
-import com.google.gson.internal.JsonReaderInternalAccess
 import com.mojang.datafixers.util.Either
 import com.samsthenerd.duckyperiphs.hexcasting.utils.HexalObfMapState
-import io.github.techtastic.hexparty.hexparty
-import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.registries.Registries
-import net.minecraft.resources.RegistryOps
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
@@ -166,127 +160,129 @@ object IotaParser {
         }
         return GarbageIota()
     }
+    fun Iota.json_from_iota(env: CastingEnvironment) : JsonElement {
+        if(this is ListIota){
+            return this.json_from_list(env)
+        }
+        if(this is Vec3Iota) {
+            val temp = JsonObject()
+            temp.add("x", JsonPrimitive(this.vec3.x))
+            temp.add("y", JsonPrimitive(this.vec3.y))
+            temp.add("z", JsonPrimitive(this.vec3.z))
+            return temp
+        }
+        if(this is StringIota){
+            return JsonPrimitive(this.string)
+        }
+        if(this is PatternIota) {
+            val temp = JsonObject()
+            temp.add("angles", JsonPrimitive(this.pattern.anglesSignature()))
+            temp.add("startDir",JsonPrimitive(this.pattern.startDir.toString()))
+            return temp
+        }
+        if(this is DoubleIota) {
+            return JsonPrimitive(this.double)
+        }
+        if(this is BooleanIota) {
+            return JsonPrimitive(this.bool)
+        }
+        if(this is NullIota) {
+            val temp = JsonObject()
+            temp.add("null", JsonPrimitive(true))
+            return temp
+        }
+        if(this is EntityIota) {
+            val temp = JsonObject()
+            temp.add("uuid", JsonPrimitive(this.entity.uuid.toString()))
+            temp.add("name", JsonPrimitive(this.entity.name.toString()))
+            return temp
+        }
+        if(this is MatrixIota) {
+            val temp = JsonObject()
+            temp.add("rows",JsonPrimitive(this.matrix.rows))
+            temp.add("cols",JsonPrimitive(this.matrix.columns))
+            val arr = JsonArray()
+            for (i in 0..< (this.matrix.rows * this.matrix.columns)) {
+                arr.add(this.matrix[i])
+            }
+            temp.add("matrix",arr)
+            return temp
+        }
+        if (this is ItemTypeIota) {
+            val temp = JsonObject()
+            val type = this.either
+            val item = type.left()
+            if (item.isPresent) {
+                val typeLoc = BuiltInRegistries.ITEM.getKey(item.get())
+                temp.add("itemType",JsonPrimitive(typeLoc.toString()))
+                temp.add("isItem",JsonPrimitive(true))
+            }
+            if (type.right().isPresent) {
+                val typeLoc = BuiltInRegistries.BLOCK.getKey(type.right().get());
+                temp.add("itemType", JsonPrimitive(typeLoc.toString()))
+                temp.add("isItem",JsonPrimitive(false))
+            }
+            return temp
+        }
+        if (this is EntityTypeIota) {
+            val temp = JsonObject()
+            val type = this.entityType
+            val typeLoc = BuiltInRegistries.ENTITY_TYPE.getKey(type)
+            temp.add("entityType",JsonPrimitive(typeLoc.toString()))
+            return temp
+        }
+        if (this is IotaTypeIota) {
+            val temp = JsonObject()
+            val type = this.iotaType
+            val typeLoc = HexIotaTypes.REGISTRY.getKey(type)
+            temp.add("iotaType",JsonPrimitive(typeLoc.toString()))
+            return temp
+        }
+        if (this is MoteIota) {
+            val temp = JsonObject()
+            val itemIndex = this.itemIndex
+            val uuid = itemIndex.storage
+            val index = itemIndex.index
+            val itemID = this.item.toString()
+            val moteData = HexalObfMapState.MoteData(uuid,index,itemID)
+            val thisMoteUUID = HexalObfMapState.getServerState(env.world.server).getOrCreateMoteObfUUID(moteData)
+            temp.add("moteUuid", JsonPrimitive(thisMoteUUID.toString()))
+            temp.add("itemID", JsonPrimitive(itemID))
+            temp.add("nexusUUID", JsonPrimitive(uuid.toString()))
+            return temp
+        }
+        if (this is GateIota) {
+            val temp = JsonObject()
+            val gData = HexalObfMapState.GateDataFromIota(this)
+            val thisGateUUID = HexalObfMapState.getServerState(env.world.server).getOrCreateGateUUID(gData)
+            temp.add("gate",JsonPrimitive(thisGateUUID.toString()))
+            if (gData.type == 0) {
+                temp.add("gateType",JsonPrimitive("drifting"))
+            } else {
+                val location_object = JsonObject()
+                location_object.add("x", JsonPrimitive(gData.tVec.x))
+                location_object.add("y", JsonPrimitive(gData.tVec.y))
+                location_object.add("z", JsonPrimitive(gData.tVec.z))
+                if (gData.type == 1) {
+                    temp.add("gateType",JsonPrimitive("location"))
+                    temp.add("location",location_object)
+                }
+                if (gData.type==2) {
+                    temp.add("gateType",JsonPrimitive("entity"))
+                    temp.add("entity",JsonPrimitive(gData.entUuid.toString()))
+                    temp.add("offset",location_object)
+                }
+            }
+            return temp
+        }
+        val temp = JsonObject()
+        temp.add("garbage", JsonPrimitive(true))
+        return temp
+    }
     fun ListIota.json_from_list(env: CastingEnvironment) : JsonArray {
         val json = JsonArray()
         this.list.forEach {value->
-            if(value is ListIota){
-                json.add(value.json_from_list(env))
-            }
-            if(value is Vec3Iota) {
-                val temp = JsonObject()
-                temp.add("x", JsonPrimitive(value.vec3.x))
-                temp.add("y", JsonPrimitive(value.vec3.y))
-                temp.add("z", JsonPrimitive(value.vec3.z))
-                json.add(temp)
-            }
-            if(value is StringIota){
-                json.add(JsonPrimitive(value.string))
-            }
-            if(value is PatternIota) {
-                val temp = JsonObject()
-                temp.add("angles", JsonPrimitive(value.pattern.anglesSignature()))
-                temp.add("startDir",JsonPrimitive(value.pattern.startDir.toString()))
-                json.add(temp)
-            }
-            if(value is DoubleIota) {
-                json.add(JsonPrimitive(value.double))
-            }
-            if(value is BooleanIota) {
-                json.add(JsonPrimitive(value.bool))
-            }
-            if(value is NullIota) {
-                val temp = JsonObject()
-                temp.add("null", JsonPrimitive(true))
-                json.add(temp)
-            }
-            if(value is EntityIota) {
-                val temp = JsonObject()
-                temp.add("uuid", JsonPrimitive(value.entity.uuid.toString()))
-                temp.add("name", JsonPrimitive(value.entity.name.toString()))
-                json.add(temp)
-            }
-            if(value is MatrixIota) {
-                val temp = JsonObject()
-                temp.add("rows",JsonPrimitive(value.matrix.rows))
-                temp.add("cols",JsonPrimitive(value.matrix.columns))
-                val arr = JsonArray()
-                for (i in 0..< (value.matrix.rows * value.matrix.columns)) {
-                    arr.add(value.matrix[i])
-                }
-                temp.add("matrix",arr)
-                json.add(temp)
-            }
-            if (value is ItemTypeIota) {
-                val temp = JsonObject()
-                val type = value.either
-                val item = type.left()
-                if (item.isPresent) {
-                    val typeLoc = BuiltInRegistries.ITEM.getKey(item.get())
-                    temp.add("itemType",JsonPrimitive(typeLoc.toString()))
-                    temp.add("isItem",JsonPrimitive(true))
-                }
-                if (type.right().isPresent) {
-                    val typeLoc = BuiltInRegistries.BLOCK.getKey(type.right().get());
-                    temp.add("itemType", JsonPrimitive(typeLoc.toString()))
-                    temp.add("isItem",JsonPrimitive(false))
-                }
-                json.add(temp)
-            }
-            if (value is EntityTypeIota) {
-                val temp = JsonObject()
-                val type = value.entityType
-                val typeLoc = BuiltInRegistries.ENTITY_TYPE.getKey(type)
-                temp.add("entityType",JsonPrimitive(typeLoc.toString()))
-                json.add(temp)
-            }
-            if (value is IotaTypeIota) {
-                val temp = JsonObject()
-                val type = value.iotaType
-                val typeLoc = HexIotaTypes.REGISTRY.getKey(type)
-                temp.add("iotaType",JsonPrimitive(typeLoc.toString()))
-                json.add(temp)
-            }
-            if (value is MoteIota) {
-                val temp = JsonObject()
-                val itemIndex = value.itemIndex
-                val uuid = itemIndex.storage
-                val index = itemIndex.index
-                val itemID = value.item.toString()
-                val moteData = HexalObfMapState.MoteData(uuid,index,itemID)
-                val thisMoteUUID = HexalObfMapState.getServerState(env.world.server).getOrCreateMoteObfUUID(moteData)
-                temp.add("moteUuid", JsonPrimitive(thisMoteUUID.toString()))
-                temp.add("itemID", JsonPrimitive(itemID))
-                temp.add("nexusUUID", JsonPrimitive(uuid.toString()))
-                json.add(temp)
-            }
-            if (value is GateIota) {
-                val temp = JsonObject()
-                val gData = HexalObfMapState.GateDataFromIota(value)
-                val thisGateUUID = HexalObfMapState.getServerState(env.world.server).getOrCreateGateUUID(gData)
-                if (gData.type == 0) {
-                    temp.add("gateType",JsonPrimitive("drifting"))
-                } else {
-                    val location_object = JsonObject()
-                    location_object.add("x", JsonPrimitive(gData.tVec.x))
-                    location_object.add("y", JsonPrimitive(gData.tVec.y))
-                    location_object.add("z", JsonPrimitive(gData.tVec.z))
-                    if (gData.type == 1) {
-                        temp.add("gateType",JsonPrimitive("location"))
-                        temp.add("location",location_object)
-                    }
-                    if (gData.type==2) {
-                        temp.add("gateType",JsonPrimitive("entity"))
-                        temp.add("entity",JsonPrimitive(gData.entUuid.toString()))
-                        temp.add("offset",location_object)
-                    }
-                }
-                json.add(temp)
-            }
-            if(value is GarbageIota) {
-                val temp = JsonObject()
-                temp.add("garbage", JsonPrimitive(true))
-                json.add(temp)
-            }
+            json.add(value.json_from_iota(env))
         }
         return json
     }

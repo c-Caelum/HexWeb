@@ -3,7 +3,7 @@ package io.github.techtastic.hexparty.casting.iota
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.IotaType
 import io.github.techtastic.hexparty.HTTPRequestsHandler
-import io.github.techtastic.hexparty.casting.hexpartyIotaTypes
+import io.github.techtastic.hexparty.casting.HexpartyIotaTypes
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.network.chat.Component
@@ -11,7 +11,7 @@ import net.minecraft.network.chat.Style
 import net.minecraft.server.level.ServerLevel
 import java.util.UUID
 
-class ResponseIota(val uuid: UUID): Iota(hexpartyIotaTypes.RESPONSE.get(), uuid) {
+class ResponseIota(val uuid: UUID): Iota(HexpartyIotaTypes.RESPONSE.get(), uuid) {
     fun getPayload() = this.uuid
 
     override fun isTruthy() = HTTPRequestsHandler.getResponse(uuid)?.left()?.isPresent ?: false

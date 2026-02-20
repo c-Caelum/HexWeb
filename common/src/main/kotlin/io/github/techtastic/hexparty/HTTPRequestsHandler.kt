@@ -2,7 +2,9 @@ package io.github.techtastic.hexparty
 
 import at.petrak.hexcasting.api.casting.mishaps.MishapInvalidIota
 import com.mojang.datafixers.util.Either
-import io.github.techtastic.hexparty.utils.hexpartyOperatorUtils
+import io.github.techtastic.hexparty.config.HexpartyConfig
+import io.github.techtastic.hexparty.utils.HexpartyOperatorUtils
+import org.apache.commons.codec.binary.Hex
 import ram.talia.moreiotas.api.casting.iota.StringIota
 import java.net.URI
 import java.net.http.HttpClient
@@ -13,10 +15,11 @@ import java.util.*
 object HTTPRequestsHandler {
     var client: HttpClient = HttpClient.newHttpClient()
     val responses = mutableMapOf<UUID, Either<HttpResponse<String>, Throwable>>()
+    val copyparty = HexpartyConfig.COPYPARTY_URL.get()
 
     fun makeAndQueueRequest(uuid: UUID, url: String, headers: Array<String>?, method: String?, body: String?,password : String?) {
-        val url = "https://copyparty.chloes.media/$url?pw=$password"
-        hexpartyOperatorUtils.checkBlacklist(url)
+        val url = "$copyparty$url?pw=$password"
+        HexpartyOperatorUtils.checkBlacklist(url)
 
         var builder = HttpRequest
             .newBuilder(URI.create(url))
