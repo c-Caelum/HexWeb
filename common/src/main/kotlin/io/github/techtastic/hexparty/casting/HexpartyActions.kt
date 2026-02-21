@@ -33,6 +33,10 @@ object HexpartyActions {
         HexPattern.fromAngles("wqqqqwqdqdwdqddqaq",HexDir.NORTH_EAST),
         OpSetCopyparty
     )}
+    val GET_CODE = ACTIONS.register("get_code") { ActionRegistryEntry(
+        HexPattern.fromAngles("qqqqwaedewed",HexDir.NORTH_EAST),
+        OpGetCode
+    )}
 
 
     fun register() {

@@ -14,7 +14,10 @@ import java.util.UUID
 class ResponseIota(val uuid: UUID): Iota(HexpartyIotaTypes.RESPONSE.get(), uuid) {
     fun getPayload() = this.uuid
 
-    override fun isTruthy() = HTTPRequestsHandler.getResponse(uuid)?.left()?.isPresent ?: false
+    override fun isTruthy() : Boolean {
+
+        return (HTTPRequestsHandler.getResponse(uuid) != null)
+    }
 
     override fun toleratesOther(that: Iota) = false
 

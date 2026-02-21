@@ -17,9 +17,17 @@
       "type": "hexcasting:pattern",
       "op_id": "hexparty:request",
       "anchor": "hexparty:request",
-      "input": "url, method | null, headers | null, body | null",
+      "input": "path, method | null, headers | null, body | null",
       "output": "response",
       "text": "hexparty.page.http_spells.request"
+    },
+    {
+      "type": "hexcasting:pattern",
+      "op_id": "hexparty:get_code",
+      "anchor": "hexparty:get_code",
+      "input": "request",
+      "output": "num",
+      "text": "hexparty.page.http_spells.get_code"
     },
     {
       "type": "hexcasting:pattern",
@@ -49,7 +57,7 @@
       "type": "hexcasting:pattern",
       "op_id": "hexparty:set_copyparty",
       "anchor": "hexparty:set_copyparty",
-      "input": "path, [iota], password",
+      "input": "path, any, password",
       "output": "response",
       "text": "hexparty.page.http_spells.set_copyparty"
     }

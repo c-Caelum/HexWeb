@@ -25,7 +25,7 @@ object OpRequest: ConstMediaAction {
         val body = args.getBodyString(3, argc)
 
         val uuid = UUID.randomUUID()
-        HTTPRequestsHandler.makeAndQueueRequest(uuid, url, headers.toTypedArray(), method, body,null)
+        HTTPRequestsHandler.makeAndQueueRequest(uuid, url, headers.toTypedArray(), method, body)
         return listOf(ResponseIota(uuid))
     }
 }

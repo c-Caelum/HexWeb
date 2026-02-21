@@ -14,12 +14,14 @@ object OpGetCopyparty: ConstMediaAction {
         get() = 2
 
     override fun execute(args: List<Iota>, env: CastingEnvironment): List<Iota> {
-        val path = args.getString(0, argc)
+        val path = args.getString(0, argc).plus("/hex.json")
         val password = args.getString(1,argc)
         val headers = listOf<String>("user-agent",
-            "Hexparty/1.0 " + env::class.simpleName + " " + (if(env is CircleCastEnv) {env.impetus?.blockPos} else {env.castingEntity?.uuid}?:"NONE"))
+            "Hexparty/1.0 " + env::class.simpleName + " " + (if(env is CircleCastEnv) {env.impetus?.blockPos} else {env.castingEntity?.uuid}?:"NONE"),
+            "pw",password
+        )
         val uuid = UUID.randomUUID()
-        HTTPRequestsHandler.makeAndQueueRequest(uuid, path, headers.toTypedArray(), null, null,password)
+        HTTPRequestsHandler.makeAndQueueRequest(uuid, path, headers.toTypedArray(), null, null)
         return listOf(ResponseIota(uuid))
     }
 }

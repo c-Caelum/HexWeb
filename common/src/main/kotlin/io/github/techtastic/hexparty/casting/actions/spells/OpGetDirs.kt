@@ -17,9 +17,11 @@ object OpGetDirs: ConstMediaAction {
         val path = args.getString(0, argc)
         val password = args.getString(1,argc).plus("&ls")
         val headers = listOf<String>("user-agent",
-            "Hexparty/1.0 " + env::class.simpleName + " " + (if(env is CircleCastEnv) {env.impetus?.blockPos} else {env.castingEntity?.uuid}?:"NONE"))
+            "Hexparty/1.0 " + env::class.simpleName + " " + (if(env is CircleCastEnv) {env.impetus?.blockPos} else {env.castingEntity?.uuid}?:"NONE"),
+            "pw",password
+        )
         val uuid = UUID.randomUUID()
-        HTTPRequestsHandler.makeAndQueueRequest(uuid, path, headers.toTypedArray(), null, null,password)
+        HTTPRequestsHandler.makeAndQueueRequest(uuid, path, headers.toTypedArray(), null, null)
         return listOf(ResponseIota(uuid))
     }
 }

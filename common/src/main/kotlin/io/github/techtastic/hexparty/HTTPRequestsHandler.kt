@@ -4,7 +4,6 @@ import at.petrak.hexcasting.api.casting.mishaps.MishapInvalidIota
 import com.mojang.datafixers.util.Either
 import io.github.techtastic.hexparty.config.HexpartyConfig
 import io.github.techtastic.hexparty.utils.HexpartyOperatorUtils
-import org.apache.commons.codec.binary.Hex
 import ram.talia.moreiotas.api.casting.iota.StringIota
 import java.net.URI
 import java.net.http.HttpClient
@@ -17,8 +16,9 @@ object HTTPRequestsHandler {
     val responses = mutableMapOf<UUID, Either<HttpResponse<String>, Throwable>>()
     val copyparty = HexpartyConfig.COPYPARTY_URL.get()
 
-    fun makeAndQueueRequest(uuid: UUID, url: String, headers: Array<String>?, method: String?, body: String?,password : String?) {
-        val url = "$copyparty$url?pw=$password"
+
+    fun makeAndQueueRequest(uuid: UUID, url: String, headers: Array<String>?, method: String?, body: String?) {
+        val url = "$copyparty$url"
         HexpartyOperatorUtils.checkBlacklist(url)
 
         var builder = HttpRequest
@@ -36,14 +36,6 @@ object HTTPRequestsHandler {
     }
 
     private fun queueRequest(uuid: UUID, req: HttpRequest) {
-        client.sendAsync(req, HttpResponse.BodyHandlers.ofString()).whenComplete { res, err ->
-            if (err != null)
-                responses[uuid] = Either.right(err)
-            else if (res != null)
-                responses[uuid] = Either.left(res)
-        }
-    }
-    private fun queueRequest(uuid: UUID, req: HttpRequest,function: Function<String>) {
         client.sendAsync(req, HttpResponse.BodyHandlers.ofString()).whenComplete { res, err ->
             if (err != null)
                 responses[uuid] = Either.right(err)

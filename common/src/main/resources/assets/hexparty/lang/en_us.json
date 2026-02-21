@@ -31,5 +31,7 @@
   "hexcasting.action.hexparty:set_copyparty": "Set Copyparty",
   "hexparty.page.http_spells.set_copyparty": "$(br)Given a path, iotas, and password, attempts to set the file at that hexparty path to the given iotas. You *can* do this with the Request pattern, but it is significantly better to do it this way.",
   "hexcasting.action.hexparty:response_json": "Get Response II",
-  "hexparty.page.http_spells.response_json": "$(br)Turns the response's body into a pattern list, using json as an intermediary. (Ducky Peripherals' mappings)"
+  "hexparty.page.http_spells.response_json": "Turns the response's body into a pattern list, using json as an intermediary. (Ducky Peripherals' mappings)",
+  "hexcasting.action.hexparty:get_code": "Get Status",
+  "hexparty.page.http_spells.get_code": "Turns the given response iota into the status code associated with it, or -1 if it is unfinished or it cannot find one."
 }
