@@ -36,7 +36,7 @@ object IotaParser {
     fun JsonElement.is_Boolean() : Boolean {
         return (this.isJsonPrimitive && (this as JsonPrimitive).isBoolean)
     }
-    fun JsonElement.JsonToIota(env : CastingEnvironment) : Iota {
+    fun JsonElement.jsonToIota(env : CastingEnvironment) : Iota {
         /*
         * This doesn't mishap when something goes wrong, it just errors (caught by hex).
         * So, don't malform your json!!!
@@ -49,7 +49,7 @@ object IotaParser {
         }
         if (this.isJsonArray) {
             return ListIota(this.asJsonArray.map {value ->
-                value.JsonToIota(env)
+                value.jsonToIota(env)
             })
         }
         if (this.isJsonObject) {
@@ -62,7 +62,7 @@ object IotaParser {
             if (jsonObj.has("startDir") && jsonObj.has("angles")) {
                 val angles = jsonObj.get("angles").asString
                 val startDir = jsonObj.get("startDir").asString
-                return PatternIota(HexPattern.fromAngles(angles, HexDir.fromString(startDir)))
+                return PatternIota(HexPattern.fromAnglesUnchecked(angles, HexDir.fromString(startDir)))
             }
             if (jsonObj.has("x") && jsonObj.has("y") && jsonObj.has("z")) {
                 val x = jsonObj.get("x").asDouble
@@ -110,21 +110,21 @@ object IotaParser {
                 return NullIota()
             }
             if (jsonObj.has("gate") && jsonObj.get("gate").is_String()) {
-                val gateMap = HexalObfMapState.getServerState(env.world.server)
+                val serverMap = HexalObfMapState.getServerState(env.world.server);
                 val gateUuid = UUID.fromString(jsonObj.get("gate").asString)
-                val gData = gateMap.getGateData(gateUuid)
+                val gData = serverMap.getGateData(gateUuid);
 
                 if (gData != null) {
                     if(gData.type == 0) {
-                        return GateIota(gData.index, null);
+                        return GateIota(gData.index(), null);
                     }
                     if (gData.type == 1) {
-                        return GateIota(gData.index, Either.left(gData.tVec))
+                        return GateIota(gData.index(), Either.left(gData.tVec))
                     }
                     if (gData.type == 2) {
                         val ent = env.world.getEntity(gData.entUuid()) ?: return NullIota()
                         val gatePair = Pair<Entity, Vec3>(ent,gData.tVec())
-                        return GateIota(gData.index,Either.right(gatePair))
+                        return GateIota(gData.index(),Either.right(gatePair))
                     }
                 }
 
@@ -153,23 +153,21 @@ object IotaParser {
                 if (!ResourceLocation.isValidResourceLocation(typeKey)) {return GarbageIota() }
                 val typeLoc = ResourceLocation(typeKey)
                 if (isItem) {
-                    val type = BuiltInRegistries.ITEM.get(typeLoc)
-                    if (type == null) return GarbageIota()
+                    val type = BuiltInRegistries.ITEM.get(typeLoc) ?: return GarbageIota()
                     return ItemTypeIota(type)
                 } else {
-                    val type = BuiltInRegistries.BLOCK.get(typeLoc)
-                    if (type == null) return GarbageIota()
+                    val type = BuiltInRegistries.BLOCK.get(typeLoc) ?: return GarbageIota()
                     return ItemTypeIota(type)
                 }
             }
         }
         return GarbageIota()
     }
-    fun Iota.json_from_iota(env: CastingEnvironment) : JsonElement {
+    fun Iota.iotaToJson(env: CastingEnvironment) : JsonElement {
         if(this is ListIota){
             val temp = JsonArray()
             this.list.forEach{value ->
-                temp.add(value.json_from_iota(env))
+                temp.add(value.iotaToJson(env))
             }
             return temp
         }
@@ -291,7 +289,7 @@ object IotaParser {
     fun ListIota.json_from_list(env: CastingEnvironment) : JsonArray {
         val json = JsonArray()
         this.list.forEach {value->
-            json.add(value.json_from_iota(env))
+            json.add(value.iotaToJson(env))
         }
         return json
     }
