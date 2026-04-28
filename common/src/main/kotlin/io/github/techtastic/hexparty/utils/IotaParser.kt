@@ -91,6 +91,7 @@ object IotaParser {
                         mat.put(i - 1, matrixTable[i].asDouble)
                     }
                 }
+                return MatrixIota(mat)
             }
             if (jsonObj.has("moteUuid") && jsonObj.get("moteUuid").is_String() &&
             jsonObj.has("itemID") && jsonObj.get("itemID").is_String()) {
@@ -206,8 +207,8 @@ object IotaParser {
         }
         if(this is MatrixIota) {
             val temp = JsonObject()
-            temp.add("rows",JsonPrimitive(this.matrix.rows))
-            temp.add("cols",JsonPrimitive(this.matrix.columns))
+            temp.add("row",JsonPrimitive(this.matrix.rows))
+            temp.add("col",JsonPrimitive(this.matrix.columns))
             val arr = JsonArray()
             for (i in 0..< (this.matrix.rows * this.matrix.columns)) {
                 arr.add(this.matrix[i])
